@@ -1,0 +1,70 @@
+/******************************************************************************
+8 3
+5 6 1 2 6 6 4 3
+*******************************************************************************/
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+
+long long int n,i,j,copie, x[10001],s[10001],sec=-100000,st,dr;
+bool v[10001];
+int main()
+{
+    ifstream fin("secvmax.in");
+    ofstream fout("secvmax.out");
+
+    fin>>n;
+    for(i=1;i<=n;i++)
+    {
+        fin>>x[i];
+        if(x[i]%2==0)
+        {
+            v[i]=1;
+        }
+        else
+        {
+            v[i]=0;
+        }
+        s[i]=x[i]+s[i-1];
+    }
+
+    for(i=1;i<=n;i++)
+    {
+
+        if(v[i]==v[i+1] && v[i]==1)
+        {
+            j=i;
+
+            while(v[i]==v[j])
+            {
+                j++;
+            }
+            if(sec<j-i+1)
+            {
+                st=i;
+                dr=j-1;
+                sec=j-i+1;
+            }
+            if(sec==j-i+1)
+            {
+                if(s[dr]-s[st-1]<s[j]-s[i-1])
+                {
+                    st=i;
+                    dr=j-1;
+                    sec=j-i+1;
+                }
+            }
+
+        }
+        //cout<<st<<" "<<dr<<endl;
+
+    }
+    fout<<st<<" "<<dr;
+
+
+
+
+    return 0;
+}
